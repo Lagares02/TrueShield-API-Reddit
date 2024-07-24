@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException
-from models.models.py import SearchRequest
+from models.models import SearchRequest
 from services.reddit import search_reddit_posts
 
 router = APIRouter()
