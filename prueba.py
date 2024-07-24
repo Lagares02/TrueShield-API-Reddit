@@ -1,8 +1,11 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import praw
-import json
 from datetime import datetime
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 class SearchRequest(BaseModel):
     keyword: str
@@ -10,21 +13,20 @@ class SearchRequest(BaseModel):
 app = FastAPI()
 
 # Configuración de PRAW
-UG = "TrueShield/0.1 by No_Motor5330"
 reddit = praw.Reddit(
-    client_id = 'h1XqaRXkyHmwMd7r7Yqe_Q',
-    client_secret = 'XKc-XCP-eE5VNGGMLkntGZxK3R5MUg',
-    user_agent = UG
+    client_id = os.getenv('CLIENT_ID'),
+    client_secret = os.getenv('CLIENT_SECRET'),
+    user_agent = os.getenv('UG')
 )
 
-@app.post("/search_posts")
-async def search_posts(request: SearchRequest):
+@app.post("/contrasting")
+async def contrasting(request: SearchRequest):
     try:
         results = []
         for submission in reddit.subreddit('all').search(request.keyword, limit=10):
             results.append({
                 "Id": submission.id,
-                "DatePub": datetime.utcfromtimestamp(submission.created_utc).isoformat(),
+                "DatePub": datetime.utcfromtimestamp(submission.created_utc).strftime('%Y-%m-%d'),
                 "NameProfile": str(submission.author) if submission.author else "Unknown",
                 "TitlePub": submission.title,
                 "TextPub": submission.selftext,
