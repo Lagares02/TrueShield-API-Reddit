@@ -76,7 +76,7 @@ cd TrueShield-API-Reddit
 ```
 
 > [!IMPORTANT]
-> No olvides configurar tus variables de entorno en el archivo `.env` para una correcta conexión con la base de datos.
+> No olvides configurar tus variables de entorno en el archivo `.env` para una correcta ejecución de la API.
 
 - **Crear un proyecto en Reddit**: Para obtener las credenciales necesarias (`CLIENT_ID`, `CLIENT_SECRET`, `UG`), necesitas crear un proyecto en Reddit. Puedes hacerlo siguiendo estos pasos:
   - Ve a [Reddit App Preferences](https://www.reddit.com/prefs/apps).
