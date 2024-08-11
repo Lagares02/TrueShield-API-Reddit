@@ -21,6 +21,11 @@ def search_reddit_posts(keywords):
     for submission in reddit.subreddit('all').search(" OR ".join(keywords), limit=100):
         title_text = (submission.title + " " + submission.selftext).lower()
         matches = sum(1 for keyword in keywords if keyword in title_text)
+        
+        if matches >= 1:
+            ContextLevel = round(float(matches / len(keywords)), 2)
+        else:
+            ContextLevel = 0.0
 
         if matches >= 2:
             results.append({
@@ -34,8 +39,9 @@ def search_reddit_posts(keywords):
                 "CantComents": submission.num_comments,
                 "CantShares": submission.num_crossposts,
                 "TrueLevel": 0.60,
+                "ContextLevel": ContextLevel,
                 "Type_item": "reddit",
-                "matches": matches  # Añadir el número de coincidencias
+                "matches": matches
             })
 
     results = sorted(results, key=lambda x: x["matches"], reverse=True)
