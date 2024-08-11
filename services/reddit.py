@@ -40,10 +40,9 @@ def search_reddit_posts(keywords):
                 "CantShares": submission.num_crossposts,
                 "TrueLevel": 0.60,
                 "ContextLevel": ContextLevel,
-                "Type_item": "reddit",
-                "matches": matches
+                "Type_item": "reddit"
             })
 
-    results = sorted(results, key=lambda x: x["matches"], reverse=True)
+    results = sorted(results, key=lambda x: x.get("matches", 0), reverse=True)
     
     return results
