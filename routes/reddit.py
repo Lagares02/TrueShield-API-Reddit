@@ -12,10 +12,12 @@ async def home():
 @router.post("/contrasting_reddit")
 async def contrasting(request: SearchRequest):
     try:
+        print("Recibido!!!")
+        keywords = request.keywords.keywords_es + request.subjects
         
-        keywords = request.keywords + request.subjects
+        prompt = request.prompt
         
-        results = search_reddit_posts(keywords)
+        results = search_reddit_posts(keywords, prompt)
         
         return {
             "Reddit": results
@@ -42,7 +44,7 @@ async def websocket_endpoint(websocket: WebSocket, request: SearchRequest):
             items = search_reddit_posts(Keywords)
             
             return {
-                "item": items
+                "Reddit": items
             }
         
     except Exception as e:
